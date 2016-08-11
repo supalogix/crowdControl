@@ -7,6 +7,29 @@
     <script type="application/x-javascript" src="app/crowdControlCalc.js"></script>
 </head>
 <body>
-
+  <div id="root">
+    <button id="button">Run a Test</button>
+    <p>Input: <span id="input">N/A</span></p>
+    <p>Expected Output: <span id="expected_output">N/A</span></p>
+    <p>Actual Output: <span id="actual_output">N/A</span></p>
+    <p>Result: <span id="result">N/A</span></p>
+  </div>
 </body>
+<script type="text/javascript">
+  document.getElementById("button").addEventListener("click", function() {
+    var input = crowdControlTestData.randomTestInput();
+    var expectedOutput = crowdControlTestData.getSolutionForLastTestInput();
+    var actualOutput = crowdControlCalc.calculateCrowdControlChange(input);
+    var result = isEqual(expectedOutput, actualOutput) ? "PASS" : "FAIL";
+
+    document.getElementById("input").innerHTML = JSON.stringify(input);
+    document.getElementById("expected_output").innerHTML = JSON.stringify(expectedOutput);
+    document.getElementById("actual_output").innerHTML = JSON.stringify(actualOutput);
+    document.getElementById("result").innerHTML = result;
+  });
+
+  function isEqual(lValue, rValue) {
+    return (JSON.stringify(lValue) === JSON.stringify(rValue))
+  }
+</script>
 </html>
